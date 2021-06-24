@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import MyApp from './App';
 
 //import * as serviceWorker from ‘./helpers/serviceWorker’;
 
@@ -12,7 +12,8 @@ import reportWebVitals from './reportWebVitals';
 
 
 ReactDOM.render(
-  <App/>,
+  //<App/>,
+  <MyApp/>,
   
   document.getElementById('root')
 );

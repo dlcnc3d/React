@@ -1,77 +1,82 @@
-import React from "react";
-
-import {
-  withGoogleMap,
-   
-  withScriptjs,
-  GoogleMap,
-  DirectionsRenderer,
-  SearchBox,
-  Marker
-} from "react-google-maps";
+import React from "react"
+import { compose, withProps, withStateHandlers } from "recompose"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow, SearchBox } from "react-google-maps"
+import { Alarm } from "@material-ui/icons";
 
 
-//import useStyles from "./usestyles";
-
-import FooterNew from "./Components/footer";
-//import MainElement from "./MainElement";
-import UpperToolMenu from "./Components/UpperToolMenu";
-import UpperElement from "./Components/UpperElement";
 import UpControlElement from "./Components/UpControlElement";
 
-import WrappedMap from "./Gmap/wrapper";
 
 
+let point;
+let markers =[]; //aray for markers
 
 
-const googleMapsApiKey = "AIzaSyC9_cVatra7UkQioADxTL8DjtySurB77ik";
+//add all position of markers to array
 
-
-function GetRoute () {
-
+function addMarker(location) {
+  
+  markers.push(location);
 }
 
 
-export default function App() {
 
-const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
+const MyApp = compose(
+  withProps({
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyC9_cVatra7UkQioADxTL8DjtySurB77ik",    
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `400px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap,
+
+  withStateHandlers(() => ({
+    isMarkerShown: false,
+    markerPosition: null
+  }), {
+    onMapClick: ({ isMarkerShown }) => (e) => ({
+        markerPosition: e.latLng,
+        isMarkerShown:true,
+        title:"start",
+        point: e.latLng.lat(),
+        addMarker(markerPosition)
+        {}
+                
+    })
+  }),
+
+)
+((props) =>
+  
+  
+  
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 49, lng: 28 }}
+    onClick={props.onMapClick}
+  >
+    {props.isMarkerShown && <Marker position={props.markerPosition} /> 
+    }
+    
+    form:<input id="travelfrom" type="text" name="name" value={
+           
+      props.markerPosition
+
+      
+     // markers.map().lng
+      }/>
+    to:<input id="travelTo" type="" name="name" />
+
+    <input type="button" value="Get Route" onclick="GetRoute()" />
+
+    
+  </GoogleMap>
+  
+);
 
 
-const onMapClick = React.useCallback((e) => {
-  setMarkers((current) => [
-    ...current,
-    {
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng(),
-      time: new Date(),
-    },
-  ]);
-}, []);
 
 
-    return (
-      <>
-      <UpperToolMenu/>
-        <main>
-          <UpperElement/>           
-          <UpControlElement/>
-         
-         <WrappedMap         
-         
-         //onCreate={addTodo}
 
-         onClick={onMapClick}
-         
-        >
-         
-
-        </WrappedMap>
-
-
-        </main>        
-        <footer><FooterNew/>  </footer>
-        
-        </>
-    );
-}
+export default MyApp
