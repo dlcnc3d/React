@@ -41,7 +41,7 @@ const MyApp = compose(
         title:"start",
         point: e.latLng.lat(),
         addMarker(markerPosition)
-        {}
+        {markers.push(markerPosition);}
                 
     })
   }),
