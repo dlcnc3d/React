@@ -3,7 +3,7 @@ import { withScriptjs, Marker } from "react-google-maps";
 
 import MapA from './MapA';
 
-import CustomMarker from './CustomMarker';
+
 
 
 
@@ -46,28 +46,8 @@ function WrappedMap() {
   > 
 
 
-{markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-            icon={{
-              url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
 
 
-
-
-
-
-<CustomMarker></CustomMarker>
 
   </MapLoader>
 </div>

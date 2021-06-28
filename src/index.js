@@ -4,16 +4,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import MyApp from './App';
 
+
+
 //import * as serviceWorker from ‘./helpers/serviceWorker’;
 
 
 
 
-
-
 ReactDOM.render(
-  //<App/>,
-  <MyApp/>,
+  <App/>,
+  //<MyApp/>,
+  //<GmapsAutocomplete/>,
+//  <ParlorForm/>,
   
   document.getElementById('root')
 );

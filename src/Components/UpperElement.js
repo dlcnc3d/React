@@ -1,10 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 //import Button from '@material-ui/core/Button'
 import {Container, Typography,  Paper, Grid} from '@material-ui/core'
 import useStyles from "./usestyles";
 
 
-function UpperElement (){
+
+function useInputValue(defaultValue = ' Chose start and end points') {
+  const [value, setValue] = useState(defaultValue)     
+
+return {
+  bind:{
+  value,
+  onChange: event => setValue(event.target.value)
+  },
+clear: () => setValue(''),
+value: () => value
+}
+}
+
+
+
+
+
+
+
+//    Chose start and end points
+
+
+
+function UpperElement (props){
     
     const  classes = useStyles();
 
@@ -22,9 +46,12 @@ return (
               component="h6"
               variant="h6"
               color="inherit"
-              gutterBottom
+              gutterBottom              
               >
-                 Chose start and end points
+                 
+                distanse is ={props.result}
+                                  
+             
               </Typography>               
               
             </div>

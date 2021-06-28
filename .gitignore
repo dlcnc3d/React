@@ -6,6 +6,8 @@
 .pnp.js
 /forTests
 
+/src/fortests
+
 # testing
 /coverage
 
