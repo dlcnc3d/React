@@ -1,40 +1,14 @@
-import React, { useState } from "react";
-
+import React from "react";
 import Button from "@material-ui/core/Button";
-
+import { Tooltip } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
-import Input from "@material-ui/core/Input";
-
 import { Container, Typography, Grid } from "@material-ui/core";
-
 import useStyles from "./usestyles";
 
-import { withScriptjs, Marker, Searchbox } from "react-google-maps";
 
-import Autocomplete from "react-google-autocomplete";
-
-import OnAuto from "../Gmap/Autocomplete";
-
-//import Autocomplete from "react-google-autocomplete";
-
-function useInputValue(defaultValue = "") {
-  const [value, setValue] = useState(defaultValue);
-
-  return {
-    bind: {
-      value,
-      onChange: (event) => setValue(event.target.value),
-    },
-    clear: () => setValue(""),
-    value: () => value,
-  };
-}
-
-//lat: 49.23, lng: 28.43
 
 function UpControlElement(props) {
-  //const startP = useInputValue(props.Start);
-  //const endP = useInputValue(props.End);
+  
 
   const classes = useStyles();
 
@@ -59,49 +33,56 @@ function UpControlElement(props) {
             <Grid item></Grid>
 
             <Grid item>
+            <Tooltip title="Click to build the route">
               <Button
                 variant="contained"
                 onClick={props.GetRouteHandler}
                 color="primary"
               >
                 {" "}
-                Get Route by click
+                Build Route
               </Button>
+              </Tooltip>
             </Grid>
             <Grid item>
-              <Button 
-              variant="contained" 
-              color="primary"
-              onClick={props.GetRouteHandlerByAuto}
-              >
-                {" "}
-                Get route by place
-                
-
-
-              </Button>
-            </Grid>
-
-            <Grid item>
+            <Tooltip title="Imitation of registration">
+             
               <Checkbox
                 id="checkbox"
                 value="registratrtion test"
-                style={{ marginLeft: "150px" }}
+                style={{ marginLeft: "250px" }}
+                onClick={props.GetOncheckedHandler}
               />
+               </Tooltip>
             </Grid>
 
             <Grid item>
-              <Button variant="outlined" color="primary">
+            <Tooltip title="Click to get your geolocation posittion">
+              <Button 
+              variant="outlined" 
+              color="primary"
+              onClick={props.GetPositionHandler}
+              
+              >
                 {" "}
-                StartPosition
+                Start poin by Geoposition
               </Button>
+              </Tooltip>
             </Grid>
+
+            
+
             <Grid item>
-              <Button variant="outlined" color="primary">
+            <Tooltip title="Delete all poits on map">
+              <Button variant="outlined" color="secondary"
+              onClick={props.DelAllpointsHandler}
+              >
                 {" "}
-                EndPosition
+                Delete All points and Routes
               </Button>
+              </Tooltip>
             </Grid>
+           
           </Grid>
         </div>
       </Container>

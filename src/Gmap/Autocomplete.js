@@ -1,12 +1,14 @@
 /*global google*/
-import React from "react";
+import React, {useEffect} from "react";
 import Input from '@material-ui/core/Input'
+import { Tooltip } from "@material-ui/core";
 
 
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
+  geocodeByAddress
 } from "react-places-autocomplete";
+
+
 
 export default function Autocomplete(props) {
   
@@ -16,41 +18,45 @@ const [coordinates, setCoordinates] = React.useState({
   lng: null
 });
 
+
 const handleSelect = async value => {
 const results = await geocodeByAddress(value);
-const latLng = getLatLng(results[0]);
+const latLng = results[0].geometry.location.lng();
+const result ={lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+
 setAddress (value);
-setCoordinates (latLng);
+setCoordinates (result);
 console.log (latLng);
+
+
+props.coordinatesChangeHandler(result)
 };
 
-const searchOptions = {
-  location:  google.maps.LatLng(-49.23, 28.43),
-  radius: 5000,
-  types: ['address']
-}
 
+const searchOptions = {
+  location: new google.maps.LatLng(49.23, 28.48, true),
+  radius: 500,
+  types: ['address'],
+  componentRestrictions: { country: "UA" }
+}
 
 
   return (
   <div>
   <PlacesAutocomplete 
+    searchOptions={searchOptions}
     value={address} 
     onChange={setAddress} 
-    onSelect={handleSelect}
-    searchOptions={searchOptions}
-    //onClick= {() => this.props.coordinatesChangeHandler(coordinates)}
-    
+    onSelect={handleSelect}        
     >
       {({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
-      <div>
-        <p>Latitude: {coordinates.lat} </p>
-        <p>Longitude: {coordinates.lng} </p>
-        
+      <div>       
+        <Tooltip title="Type address">  
+
       <Input {...getInputProps({placeholder: "Type address"})}
       
       />  
-        
+      </Tooltip>   
         <div>
          {loading ? <div>...loading</div> : null}
 
@@ -58,7 +64,6 @@ const searchOptions = {
            const style = {
              backgroundColor:suggestion.active ? "#41b6e6": "#fff"
            };
-
            
            return (
            <div {...getSuggestionItemProps(suggestion, {style})} >
